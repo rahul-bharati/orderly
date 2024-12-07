@@ -85,15 +85,16 @@ This application is designed to be similar to Trello or other task management to
 ## Database Schema (MongoDB) - Initial Draft
 
 ### User
-| Field | Type | Description |
-| --- | --- | --- |
-| id | ObjectId | Unique identifier |
-| name | String | Name of the user |
-| profile | String | Profile picture of the user |
-| email | String | Email of the user |
-| password | String | Password of the user |
-| createdAt | Date | Date of creation |
-| updatedAt | Date | Date of last update |
+| Field       | Type | Description |
+|-------------| --- | --- |
+| id          | ObjectId | Unique identifier |
+| name        | String | Name of the user |
+| email       | String | Email of the user |
+| password    | String | Password of the user |
+| profile_pic | String | Profile picture of the user |
+| jobTitle    | String | Job title of the user |
+| createdAt   | Date | Date of creation |
+| updatedAt   | Date | Date of last update |
 
 ### Project
 | Field | Type | Description                | Extra              |
@@ -192,6 +193,18 @@ This application is designed to be similar to Trello or other task management to
 | status | String | Status of the payment      | enum: ['success', 'failed']                      |
 | createdAt | Date | Date of creation           |
 | updatedAt | Date | Date of last update        |
+
+
+### RefreshToken
+
+| Field | Type | Description                  | Extra                                            |
+| --- | --- |------------------------------|--------------------------------------------------|
+| id | ObjectId | Unique identifier            |
+| user | ObjectId | User who generated the token | reference to User                                |
+| token | String | Refresh token (hashed)       |
+| createdAt | Date | Date of creation             |
+| updatedAt | Date | Date of last update          |
+
 
 
 ---
