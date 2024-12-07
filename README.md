@@ -209,7 +209,7 @@ This application is designed to be similar to Trello or other task management to
 
 ---
 
-## Logs
+## Log
 
 ### Day 1 (7th December 2024)
 - Created the repository
