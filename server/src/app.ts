@@ -25,7 +25,7 @@ export class App {
     this.app.use(helmet());
   }
 
-  public registerRouter() {
+  private registerRouter() {
     this.routers.forEach(({path, router}) => {
       this.app.use(path, router);
     });
