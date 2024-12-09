@@ -1,21 +1,16 @@
 import "dotenv/config";
-import mongoose from "mongoose";
-
-import app from "./app";
+import App from "./app";
 
 const main = async () => {
-    const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT ? parseInt(process.env.PORT) : 5000;
 
-    const MONGODB_URI = process.env.MONGODB_URI || '';
-    const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD || '';
+  const DB_URI_TEMPLATE = process.env.MONGODB_URI || '';
+  const DB_PASSWORD = process.env.MONGODB_PASSWORD || ''; // Password for database
+  const DB_CONNECTION_STRING = DB_URI_TEMPLATE.replace('<password>', DB_PASSWORD); // Final connection string
 
-    console.info("Connecting to database...");
-    await mongoose.connect(MONGODB_URI.replace('<MONGODB_PASSWORD>', MONGODB_PASSWORD));
-    console.info("Database connected successfully");
-
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
+  const app = new App();
+  await app.initializeMongoDB(DB_CONNECTION_STRING);
+  app.listen(PORT);
 }
 
 main().catch(console.error);

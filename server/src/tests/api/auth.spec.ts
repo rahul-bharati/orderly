@@ -1,26 +1,15 @@
-import {afterEach, beforeAll, describe, expect} from "@jest/globals";
+import {jwtVerify} from "jose";
 
-import {connect, closeDatabase, clearDatabase} from "../db-config";
 import {STATUS_CODE} from "../../constants/status_codes";
-import app from "../../app";
-import superTest from "supertest";
 import {ERROR_MESSAGES} from "../../constants/error-message";
+import {appRequest} from "../test-setup";
 
-beforeAll(async () => {
-  await connect();
-})
-
-afterEach(async () => {
-  await clearDatabase();
-})
-
-afterAll(async () => {
-  await closeDatabase();
-})
+const JWT_SECRET = process.env.JWT_SECRET || '';
+const JOSE_SECRET = new TextEncoder().encode(JWT_SECRET);
 
 describe("POST /auth/register", () => {
   it("should return 400 on no input", async () => {
-    const response = await superTest(app).post("/auth/register").send({});
+    const response = await appRequest.post("/auth/register").send({});
     expect(response.status).toBe(STATUS_CODE.BAD_REQUEST);
     expect(response.body).toHaveProperty('errors');
     expect(Array.isArray(response.body.errors)).toBe(true);
@@ -42,7 +31,7 @@ describe("POST /auth/register", () => {
   });
 
   it("should return 400 on invalid inputs", async () => {
-    const response = await superTest(app).post("/auth/register").send({
+    const response = await appRequest.post("/auth/register").send({
       email: "invalid-email",
       password: "pass",
       confirm_password: 'password'
@@ -76,7 +65,7 @@ describe("POST /auth/register", () => {
       confirm_password: 'Password123!'
     }
 
-    const response = await superTest(app).post("/auth/register").send(payLoad);
+    const response = await appRequest.post("/auth/register").send(payLoad);
 
     expect(response.status).toBe(STATUS_CODE.CREATED);
     expect(response.body).toHaveProperty('data');
@@ -93,9 +82,9 @@ describe("POST /auth/register", () => {
       confirm_password: 'Password123'
     }
 
-    await superTest(app).post("/auth/register").send(payLoad);
+    await appRequest.post("/auth/register").send(payLoad);
 
-    const response = await superTest(app).post("/auth/register").send(payLoad);
+    const response = await appRequest.post("/auth/register").send(payLoad);
 
     expect(response.status).toBe(STATUS_CODE.CONFLICT);
     expect(response.body).toHaveProperty('errors');
@@ -113,7 +102,7 @@ describe("POST /auth/register", () => {
 describe("POST /auth/login", () => {
 
   it('should return 400 on no input', async () => {
-    const response = await superTest(app).post('/auth/login').send({});
+    const response = await appRequest.post('/auth/login').send({});
     expect(response.status).toBe(STATUS_CODE.BAD_REQUEST);
     expect(response.body).toHaveProperty('errors');
     expect(Array.isArray(response.body.errors)).toBe(true);
@@ -136,7 +125,7 @@ describe("POST /auth/login", () => {
       password: "pass"
     }
 
-    const response = await superTest(app).post("/auth/login").send(payLoad);
+    const response = await appRequest.post("/auth/login").send(payLoad);
     expect(response.status).toBe(STATUS_CODE.BAD_REQUEST);
     expect(response.body).toHaveProperty('errors');
 
@@ -157,14 +146,14 @@ describe("POST /auth/login", () => {
       confirm_password: 'Password123!',
     }
 
-    await superTest(app).post("/auth/register").send(registerPayload);
+    await appRequest.post("/auth/register").send(registerPayload);
 
     const loginPayload = {
       email: "testemail@test.com",
       password: "obviously-wrong-password"
     }
 
-    const response = await superTest(app).post("/auth/login").send(loginPayload);
+    const response = await appRequest.post("/auth/login").send(loginPayload);
 
     expect(response.status).toBe(STATUS_CODE.UNAUTHORIZED);
     expect(response.body).toHaveProperty('errors');
@@ -179,6 +168,27 @@ describe("POST /auth/login", () => {
   });
 
   it("should return 200 OK", async () => {
-    // TODO: Implement this test
+    const registerPayload = {
+      email: "testemail@test.com",
+      password: "Password123!",
+      confirm_password: 'Password123!',
+    }
+
+    await appRequest.post("/auth/register").send(registerPayload);
+
+    const loginPayload = {
+      email: "testemail@test.com",
+      password: "Password123!"
+    }
+
+    const response = await appRequest.post("/auth/login").send(loginPayload);
+    expect(response.status).toBe(STATUS_CODE.OK);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body.data).toHaveProperty('access_token');
+    expect(response.body.data).toHaveProperty('refresh_token');
+    const {access_token} = response.body.data;
+
+    const accessPayload = await jwtVerify(access_token, JOSE_SECRET);
+    expect(accessPayload).toHaveProperty('email', loginPayload.email);
   });
 });

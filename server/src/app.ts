@@ -1,22 +1,52 @@
-import express from 'express';
+import express, {Application, Router} from 'express';
 import cors from 'cors';
 import helmet from "helmet";
 // @ts-ignore
 import morgan from 'morgan';
+import mongoose from "mongoose";
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cors());
-app.use(morgan('combined'));
-app.use(helmet());
+import Routers from "./routes/routers";
 
-app.get('/', (req, res) => {
-    res.send({message: 'Hello World!'});
-});
+export class App {
+  public app: Application;
+  private routers: { path: string, router: Router }[] = Routers;
 
-app.all('*', (req, res) => {
-    res.status(404).send({message: 'Route not found'});
-})
+  constructor() {
+    this.app = express();
+    this.initializeDefaultMiddlewares();
+    this.registerRouter();
+  }
 
-export default app;
+  private initializeDefaultMiddlewares() {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({extended: true}));
+    this.app.use(cors());
+    this.app.use(morgan('combined'));
+    this.app.use(helmet());
+  }
+
+  public registerRouter() {
+    this.routers.forEach(({path, router}) => {
+      this.app.use(path, router);
+    });
+  }
+
+  public async initializeMongoDB(uri?: string) {
+    if (uri) {
+      await mongoose.connect(uri);
+    }
+    console.info("Database connected successfully");
+  }
+
+  public async closeMongoDB() {
+    await mongoose.connection.close();
+  }
+
+  public listen(port: number) {
+    this.app.listen(port, () => {
+      console.log(`App listening on the port ${port}`);
+    });
+  }
+}
+
+export default App;

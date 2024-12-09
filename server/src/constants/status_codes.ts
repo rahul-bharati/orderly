@@ -1,4 +1,6 @@
-export const STATUS_CODE: Record<string, number> = {
+import {StatusCodeKeys} from "../types/status-code-keys";
+
+export const STATUS_CODE: Record<StatusCodeKeys, number> = {
     OK: 200,
     CREATED: 201,
     ACCEPTED: 202,
