@@ -218,5 +218,10 @@ This application is designed to be similar to Trello or other task management to
 - Setup the backend server
 - Setup tests for the backend
 
-
+### Day 2 (10th December 2024)
+- Refactored the backend code
+- Add Zod for input validation
+- Create Routes for User Authentication
+- Add schemaValidation middleware
+- Unit tests for expressCatchAll and schemaValidation
 ---
