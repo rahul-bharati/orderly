@@ -19,7 +19,7 @@ describe('Schema Validation Middleware', () => {
     mockNext = jest.fn();
   })
 
-  it('should return 404 if validation fails', async () => {
+  it('should return 400 if validation fails', async () => {
     const schema = z.object({
       name: z.string(),
     });
@@ -29,7 +29,7 @@ describe('Schema Validation Middleware', () => {
     const middleware = validateBody(schema);
     await middleware(mockRequest as Request, mockResponse as Response, mockNext);
 
-    expect(mockResponse.status).toHaveBeenCalledWith(STATUS_CODE.NOT_FOUND);
+    expect(mockResponse.status).toHaveBeenCalledWith(STATUS_CODE.BAD_REQUEST);
     expect(mockResponse.send).toHaveBeenCalled();
     expect(mockNext).not.toHaveBeenCalled();
   });

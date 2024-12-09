@@ -5,7 +5,7 @@ import {afterEach, beforeAll, afterAll} from "@jest/globals";
 let testApp: TestApp = new TestApp();
 
 beforeAll(async () => {
-  await testApp.initializeMongoDB();
+  await testApp.initializeTestDB();
 });
 
 afterEach(async () => {

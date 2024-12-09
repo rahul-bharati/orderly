@@ -1,6 +1,6 @@
-import DefaultRouter from "./default-router";
-import AuthRouter from "./auth-router";
+import defaultRouter from "./default-router";
+import authRouter from "./auth-router";
 
-const Routers = [{path: '/', router: DefaultRouter}, {path: '/auth', router: AuthRouter}];
+const Routers = [{path: '/auth', router: authRouter}, {path: '/', router: defaultRouter}];
 
 export default Routers;

@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from "express";
 
-import expressCatchAll from "../../../helpers/express-catch-all";
-import {ERROR_MESSAGES} from "../../../constants/error-message";
-import {STATUS_CODE} from "../../../constants/status_codes";
+import expressCatchAll from "../../helpers/express-catch-all";
+import {ERROR_MESSAGES} from "../../constants/error-message";
+import {STATUS_CODE} from "../../constants/status_codes";
 
 describe('Express Catch All Middleware', () => {
   it("should call the handler and return response on success", async () => {

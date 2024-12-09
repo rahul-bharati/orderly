@@ -22,4 +22,5 @@ class AuthRouter {
   }
 }
 
-export default new AuthRouter().router;
+const authRouter = new AuthRouter().router;
+export default authRouter;

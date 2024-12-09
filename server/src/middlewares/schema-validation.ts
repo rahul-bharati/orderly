@@ -9,7 +9,7 @@ const schemaValidation = (schema: ZodTypeAny, source: 'body' | 'params' | 'query
       next();
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(STATUS_CODE.NOT_FOUND).send({message: `Invalid ${source} data`, errors: error.errors});
+        res.status(STATUS_CODE.BAD_REQUEST).send({message: `Invalid ${source} data`, errors: error.errors});
       } else {
         next(error);
       }

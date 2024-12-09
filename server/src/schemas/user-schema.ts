@@ -22,4 +22,7 @@ export const UserRegistrationSchema = UserLoginSchema.extend({
     required_error: ERROR_MESSAGES.CONFIRM_PASSWORD_REQUIRED,
     invalid_type_error: ERROR_MESSAGES.PASSWORD_MISMATCH,
   }),
+}).refine(data => data.password === data.confirmPassword, {
+  message: ERROR_MESSAGES.PASSWORD_MISMATCH,
+  path: ['confirmPassword']
 })
