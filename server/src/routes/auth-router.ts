@@ -1,6 +1,8 @@
 import {Router} from "express";
 
 import AuthController from "../controllers/auth-controller";
+import {validateBody} from "../middlewares/schema-validation";
+import {UserLoginSchema, UserRegistrationSchema} from "../schemas/user-schema";
 
 class AuthRouter {
   public router: Router;
@@ -11,8 +13,8 @@ class AuthRouter {
   }
 
   private init() {
-    this.router.post('/register', AuthController.register);
-    this.router.post('/login', AuthController.login);
+    this.router.post('/register', validateBody(UserRegistrationSchema), AuthController.register);
+    this.router.post('/login', validateBody(UserLoginSchema), AuthController.login);
     this.router.post('/forgot-password', AuthController.forgotPassword);
     this.router.post('/reset-password', AuthController.resetPassword);
     this.router.post('/change-password', AuthController.changePassword);
