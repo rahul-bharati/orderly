@@ -224,4 +224,8 @@ This application is designed to be similar to Trello or other task management to
 - Create Routes for User Authentication
 - Add schemaValidation middleware
 - Unit tests for expressCatchAll and schemaValidation
+
+### Day 3 (12th December 2024)
+- Update AuthController.register
+- Update testCases for AuthController.register
 ---
