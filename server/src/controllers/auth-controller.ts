@@ -1,12 +1,26 @@
 import {Request, Response} from 'express';
 import User from "../models/user";
+import {STATUS_CODE} from "../constants/status_codes";
+import {MESSAGES} from "../constants/messages";
+import {ERROR_MESSAGES} from "../constants/error-message";
 
 class AuthController {
   async register(req: Request, res: Response) {
     const {firstName, lastName, email, password} = req.body;
-    const user = new User({firstName, lastName, email, password});
-    await user.save()
-    res.send({message: 'User registered successfully'});
+
+    const existingUser = await User.findOne({email: email});
+    if (existingUser) {
+      res.status(STATUS_CODE.CONFLICT).send({
+        errors: [{
+          field: 'email',
+          message: ERROR_MESSAGES.EMAIL_ALREADY_EXISTS
+        }]
+      });
+    } else {
+      const user = new User({firstName, lastName, email, password});
+      await user.save()
+      res.status(STATUS_CODE.CREATED).send({message: MESSAGES.REGISTER_SUCCESS});
+    }
   }
 
   async login(req: Request, res: Response) {

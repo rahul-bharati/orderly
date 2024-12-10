@@ -1,5 +1,6 @@
 import {z} from 'zod';
 import {ERROR_MESSAGES} from "../constants/error-message";
+import {PASSWORD_REGEX} from "../constants/regex";
 
 export const UserLoginSchema = z.object({
   email: z.string({
@@ -8,8 +9,9 @@ export const UserLoginSchema = z.object({
   }).email(),
   password: z.string({
     required_error: ERROR_MESSAGES.PASSWORD_REQUIRED,
-    invalid_type_error: ERROR_MESSAGES.WEAK_PASSWORD,
-  }).min(6).max(255)
+  }).min(6).max(255).refine(value => PASSWORD_REGEX.test(value), {
+    message: ERROR_MESSAGES.WEAK_PASSWORD,
+  })
 })
 
 export const UserRegistrationSchema = UserLoginSchema.extend({
@@ -20,7 +22,6 @@ export const UserRegistrationSchema = UserLoginSchema.extend({
   lastName: z.string().max(255).optional(),
   confirmPassword: z.string({
     required_error: ERROR_MESSAGES.CONFIRM_PASSWORD_REQUIRED,
-    invalid_type_error: ERROR_MESSAGES.PASSWORD_MISMATCH,
   }),
 }).refine(data => data.password === data.confirmPassword, {
   message: ERROR_MESSAGES.PASSWORD_MISMATCH,
