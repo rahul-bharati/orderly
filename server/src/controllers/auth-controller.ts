@@ -17,6 +17,7 @@ class AuthController {
         }]
       });
     } else {
+      // TODO: hash password before saving
       const user = new User({firstName, lastName, email, password});
       await user.save()
       res.status(STATUS_CODE.CREATED).send({message: MESSAGES.REGISTER_SUCCESS});
