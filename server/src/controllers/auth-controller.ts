@@ -1,11 +1,16 @@
 import {Request, Response} from 'express';
-import User from "../models/user";
+import bcrypt from 'bcrypt';
+
+import User, {IUser} from "../models/user";
 import {STATUS_CODE} from "../constants/status_codes";
 import {MESSAGES} from "../constants/messages";
 import {ERROR_MESSAGES} from "../constants/error-message";
+import {SALT_ROUNDS} from "../constants/common";
+import {Nullable} from "../types/generics";
+import authToken from "../helpers/auth-token";
 
 class AuthController {
-  async register(req: Request, res: Response) {
+  async register(req: Request, res: Response): Promise<void> {
     const {firstName, lastName, email, password} = req.body;
 
     const existingUser = await User.findOne({email: email});
@@ -16,17 +21,50 @@ class AuthController {
           message: ERROR_MESSAGES.EMAIL_ALREADY_EXISTS
         }]
       });
-    } else {
-      // TODO: hash password before saving
-      const user = new User({firstName, lastName, email, password});
-      await user.save()
-      res.status(STATUS_CODE.CREATED).send({message: MESSAGES.REGISTER_SUCCESS});
+
+      return;
     }
+    const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+    const user = new User({firstName, lastName, email, password: passwordHash});
+    await user.save()
+    res.status(STATUS_CODE.CREATED).send({message: MESSAGES.REGISTER_SUCCESS});
   }
 
-  async login(req: Request, res: Response) {
-    // Login logic
-    res.send({message: 'User logged in successfully'});
+  async login(req: Request, res: Response): Promise<void> {
+    const {email, password} = req.body;
+    const user: Nullable<IUser> = await User.findOne({email: email});
+
+    if (!user) {
+      res.status(STATUS_CODE.UNAUTHORIZED).send({
+        errors: [{
+          field: 'email',
+          message: ERROR_MESSAGES.INVALID_CREDENTIALS
+        }]
+      });
+
+      return
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      res.status(STATUS_CODE.UNAUTHORIZED).send({
+        errors: [{
+          field: 'email',
+          message: ERROR_MESSAGES.INVALID_CREDENTIALS
+        }]
+      });
+
+      return;
+    }
+
+    const accessToken = await authToken.generateAccessToken({userId: user?._id});
+    const refreshToken = await authToken.generateRefreshToken({userId: user?._id});
+
+    res.status(STATUS_CODE.OK).send({
+      data: {
+        accessToken, refreshToken
+      }
+    });
   }
 
   async forgotPassword(req: Request, res: Response) {

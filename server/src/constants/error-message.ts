@@ -15,4 +15,5 @@ export const ERROR_MESSAGES: Record<errorMessageKeys, string> = {
   FIRST_NAME_MAX_LENGTH: 'First name must not exceed 255 characters',
   FIRST_NAME_INVALID: 'First name is invalid',
   INTERNAL_SERVER_ERROR: 'Internal server error',
+  AUTH_TOKENS_NOT_SET: 'Environment variables ACCESS_TOKEN_SECRET and REFRESH_TOKEN_SECRET must be set',
 }

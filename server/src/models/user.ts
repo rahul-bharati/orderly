@@ -2,7 +2,18 @@ import mongoose from "mongoose";
 
 const {Schema} = mongoose;
 
-const userSchema = new Schema({
+export interface IUser {
+  _id?: string;
+  firstName: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  jobTitle?: string;
+  profilePicture?: string;
+  isActive?: boolean;
+}
+
+const userSchema = new Schema<IUser>({
   firstName: {
     type: String,
     required: true,

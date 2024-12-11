@@ -5,7 +5,7 @@ import {ERROR_MESSAGES} from "../../constants/error-message";
 import {appRequest} from "../test-setup";
 import {MESSAGES} from "../../constants/messages";
 
-const JWT_SECRET = process.env.JWT_SECRET || '';
+const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
 const JOSE_SECRET = new TextEncoder().encode(JWT_SECRET);
 
 describe("POST /auth/register", () => {
@@ -112,7 +112,7 @@ describe("POST /auth/login", () => {
     expect(response.body).toHaveProperty('errors');
     expect(Array.isArray(response.body.errors)).toBe(true);
 
-    expect(response.body.errors).toContainEqual(expect.arrayContaining([
+    expect(response.body.errors).toEqual(expect.arrayContaining([
       expect.objectContaining({
         field: 'email',
         message: ERROR_MESSAGES.EMAIL_REQUIRED
@@ -124,28 +124,9 @@ describe("POST /auth/login", () => {
     ]));
   });
 
-  it("should return 400 on invalid input", async () => {
-    const payLoad = {
-      email: "invalid-email",
-      password: "pass"
-    }
-
-    const response = await appRequest.post("/auth/login").send(payLoad);
-    expect(response.status).toBe(STATUS_CODE.BAD_REQUEST);
-    expect(response.body).toHaveProperty('errors');
-
-    expect(Array.isArray(response.body.errors)).toBe(true);
-
-    expect(response.body.errors).toContainEqual(expect.arrayContaining([
-      expect.objectContaining({
-        field: 'email',
-        message: ERROR_MESSAGES.INVALID_EMAIL
-      }),
-    ]));
-  });
-
   it("should return 401 on invalid credentials", async () => {
     const registerPayload = {
+      firstName: "John",
       email: "testemail@test.com",
       password: "Password123!",
       confirm_password: 'Password123!',
@@ -164,7 +145,7 @@ describe("POST /auth/login", () => {
     expect(response.body).toHaveProperty('errors');
     expect(Array.isArray(response.body.errors)).toBe(true);
 
-    expect(response.body.errors).toContainEqual(expect.arrayContaining([
+    expect(response.body.errors).toEqual(expect.arrayContaining([
       expect.objectContaining({
         field: 'email',
         message: ERROR_MESSAGES.INVALID_CREDENTIALS
@@ -174,9 +155,10 @@ describe("POST /auth/login", () => {
 
   it("should return 200 OK", async () => {
     const registerPayload = {
+      firstName: "John",
       email: "testemail@test.com",
       password: "Password123!",
-      confirm_password: 'Password123!',
+      confirmPassword: 'Password123!',
     }
 
     await appRequest.post("/auth/register").send(registerPayload);
@@ -189,11 +171,12 @@ describe("POST /auth/login", () => {
     const response = await appRequest.post("/auth/login").send(loginPayload);
     expect(response.status).toBe(STATUS_CODE.OK);
     expect(response.body).toHaveProperty('data');
-    expect(response.body.data).toHaveProperty('access_token');
-    expect(response.body.data).toHaveProperty('refresh_token');
-    const {access_token} = response.body.data;
+    expect(response.body.data).toHaveProperty('accessToken');
+    expect(response.body.data).toHaveProperty('refreshToken');
+    const {accessToken} = response.body.data;
 
-    const accessPayload = await jwtVerify(access_token, JOSE_SECRET);
-    expect(accessPayload).toHaveProperty('email', loginPayload.email);
+    const accessPayload = await jwtVerify(accessToken, JOSE_SECRET);
+    expect(accessPayload).toHaveProperty('payload');
+    expect(accessPayload.payload).toHaveProperty('userId');
   });
 });

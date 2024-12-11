@@ -9,9 +9,7 @@ export const UserLoginSchema = z.object({
   }).email(),
   password: z.string({
     required_error: ERROR_MESSAGES.PASSWORD_REQUIRED,
-  }).min(6).max(255).refine(value => PASSWORD_REGEX.test(value), {
-    message: ERROR_MESSAGES.WEAK_PASSWORD,
-  })
+  }).min(6).max(255)
 })
 
 export const UserRegistrationSchema = UserLoginSchema.extend({
@@ -23,6 +21,11 @@ export const UserRegistrationSchema = UserLoginSchema.extend({
   confirmPassword: z.string({
     required_error: ERROR_MESSAGES.CONFIRM_PASSWORD_REQUIRED,
   }),
+  password: z.string({
+    required_error: ERROR_MESSAGES.PASSWORD_REQUIRED,
+  }).min(6).max(255).refine(value => PASSWORD_REGEX.test(value), {
+    message: ERROR_MESSAGES.WEAK_PASSWORD,
+  })
 }).refine(data => data.password === data.confirmPassword, {
   message: ERROR_MESSAGES.PASSWORD_MISMATCH,
   path: ['confirmPassword']
