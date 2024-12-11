@@ -21,6 +21,8 @@ const RefreshTokenSchema = new Schema<IRefreshToken>({
   revokedByIp: {type: String},
   replacedByToken: {type: String},
   replacedByTokenIp: {type: String},
+}, {
+  timestamps: true,
 });
 
 export default mongoose.model<IRefreshToken>("RefreshToken", RefreshTokenSchema);
