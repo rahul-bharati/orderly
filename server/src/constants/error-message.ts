@@ -16,4 +16,8 @@ export const ERROR_MESSAGES: Record<errorMessageKeys, string> = {
   FIRST_NAME_INVALID: 'First name is invalid',
   INTERNAL_SERVER_ERROR: 'Internal server error',
   AUTH_TOKENS_NOT_SET: 'Environment variables ACCESS_TOKEN_SECRET and REFRESH_TOKEN_SECRET must be set',
+  TOKEN_EXPIRED: "The token has expired.",
+  INVALID_TOKEN: "The token is invalid.",
+  INVALID_TOKEN_CLAIMS: "The token claims are invalid.",
+  INVALID_TOKEN_ALGORITHM: "The token algorithm is not allowed.",
 }

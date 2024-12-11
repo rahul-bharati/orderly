@@ -39,4 +39,23 @@ describe('AuthToken', () => {
 
     expect(accessToken.split('.')[2]).not.toBe(refreshToken.split('.')[2]);
   })
+
+  it("should verify a valid access token", async () => {
+    const payload = {id: 1};
+    const accessToken = await AuthToken.generateAccessToken(payload);
+
+    const verifiedPayload = await AuthToken.verifyAccessToken(accessToken);
+    expect(verifiedPayload).toHaveProperty("payload");
+    expect(verifiedPayload.payload).toHaveProperty("id", 1);
+  })
+
+  it("should throw an error on invalid access token", async () => {
+    const invalidToken = await AuthToken.generateAccessToken({id: 1});
+    try {
+      await AuthToken.verifyAccessToken(invalidToken + "invalid");
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe(ERROR_MESSAGES.INVALID_TOKEN);
+    }
+  })
 })
