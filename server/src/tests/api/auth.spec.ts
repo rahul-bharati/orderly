@@ -4,6 +4,7 @@ import {STATUS_CODE} from "../../constants/status_codes";
 import {ERROR_MESSAGES} from "../../constants/error-message";
 import {appRequest} from "../test-setup";
 import {MESSAGES} from "../../constants/messages";
+import {describe} from "@jest/globals";
 
 const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
 const JOSE_SECRET = new TextEncoder().encode(JWT_SECRET);
@@ -179,4 +180,49 @@ describe("POST /auth/login", () => {
     expect(accessPayload).toHaveProperty('payload');
     expect(accessPayload.payload).toHaveProperty('userId');
   });
+});
+
+
+describe("POST /auth/refresh-token", () => {
+  it("should return 401 on invalid refresh token", async () => {
+    const response = await appRequest.post("/auth/refresh-token").send({
+      refreshToken: "invalid-token"
+    });
+
+    expect(response.status).toBe(STATUS_CODE.UNAUTHORIZED);
+    expect(response.body).toHaveProperty('errors');
+    expect(Array.isArray(response.body.errors)).toBe(true);
+
+    expect(response.body.errors).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        field: 'refreshToken',
+        message: ERROR_MESSAGES.INVALID_TOKEN
+      })
+    ]));
+  });
+
+  it("should return 200 OK", async () => {
+    const registerPayload = {
+      firstName: "John",
+      email: "testemail@test.com",
+      password: 'Password123!',
+      confirmPassword: 'Password123!'
+    };
+
+    await appRequest.post("/auth/register").send(registerPayload);
+
+    const loginPayload = {
+      email: "testemail@test.com",
+      password: 'Password123!'
+    }
+
+    const loginResponse = await appRequest.post("/auth/login").send(loginPayload);
+    const {refreshToken} = loginResponse.body.data;
+
+    const response = await appRequest.post("/auth/refresh-token").send({refreshToken});
+
+    expect(response.status).toBe(STATUS_CODE.OK);
+    expect(response.body).toHaveProperty('data');
+    expect(response.body.data).toHaveProperty('accessToken');
+  })
 });

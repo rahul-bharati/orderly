@@ -20,4 +20,5 @@ export const ERROR_MESSAGES: Record<errorMessageKeys, string> = {
   INVALID_TOKEN: "The token is invalid.",
   INVALID_TOKEN_CLAIMS: "The token claims are invalid.",
   INVALID_TOKEN_ALGORITHM: "The token algorithm is not allowed.",
+  REFRESH_TOKEN_REQUIRED: "Refresh token is required",
 }

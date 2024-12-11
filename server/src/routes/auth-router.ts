@@ -15,6 +15,7 @@ class AuthRouter {
   private init() {
     this.router.post('/register', validateBody(UserRegistrationSchema), AuthController.register);
     this.router.post('/login', validateBody(UserLoginSchema), AuthController.login);
+    this.router.post('/refresh-token', AuthController.refreshToken);
     this.router.post('/forgot-password', AuthController.forgotPassword);
     this.router.post('/reset-password', AuthController.resetPassword);
     this.router.post('/change-password', AuthController.changePassword);

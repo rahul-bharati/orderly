@@ -8,6 +8,7 @@ import {ERROR_MESSAGES} from "../constants/error-message";
 import {SALT_ROUNDS} from "../constants/common";
 import {Nullable} from "../types/generics";
 import authToken from "../helpers/auth-token";
+import RefreshToken from "../models/refresh-token";
 
 class AuthController {
   async register(req: Request, res: Response): Promise<void> {
@@ -60,11 +61,54 @@ class AuthController {
     const accessToken = await authToken.generateAccessToken({userId: user?._id});
     const refreshToken = await authToken.generateRefreshToken({userId: user?._id});
 
+    const refreshTokenToSave = new RefreshToken({
+      token: refreshToken,
+      userId: user._id,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      createdByIp: req.ip
+    });
+
+    await refreshTokenToSave.save();
+
     res.status(STATUS_CODE.OK).send({
       data: {
         accessToken, refreshToken
       }
     });
+  }
+
+  async refreshToken(req: Request, res: Response) {
+    const {refreshToken} = req.body;
+
+    const existingToken = await RefreshToken.findOne({token: refreshToken});
+    if (!existingToken) {
+      res.status(STATUS_CODE.UNAUTHORIZED).send({
+        errors: [{
+          field: 'refreshToken',
+          message: ERROR_MESSAGES.INVALID_TOKEN
+        }]
+      });
+
+      return;
+    }
+
+    try {
+      const payload = await authToken.verifyRefreshToken(refreshToken);
+      const accessToken = await authToken.generateAccessToken(payload);
+
+      res.status(STATUS_CODE.OK).send({
+        data: {
+          accessToken
+        }
+      });
+    } catch (error: any) {
+      res.status(STATUS_CODE.UNAUTHORIZED).send({
+        errors: [{
+          field: 'refreshToken',
+          message: ERROR_MESSAGES.INVALID_TOKEN
+        }]
+      });
+    }
   }
 
   async forgotPassword(req: Request, res: Response) {
