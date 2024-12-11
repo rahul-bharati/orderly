@@ -225,7 +225,14 @@ This application is designed to be similar to Trello or other task management to
 - Add schemaValidation middleware
 - Unit tests for expressCatchAll and schemaValidation
 
-### Day 3 (12th December 2024)
+### Day 3 (11th December 2024)
 - Update AuthController.register
 - Update testCases for AuthController.register
+
+### Day 4 (12th December 2024)
+- Update AuthController.login
+- Update testCases for AuthController.login
+- Add JWT for token generation
+- Hash password before storing
+- Login with email and password
 ---
