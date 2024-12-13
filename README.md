@@ -235,4 +235,12 @@ This application is designed to be similar to Trello or other task management to
 - Add JWT for token generation
 - Hash password before storing
 - Login with email and password
+
+### Day 5 (14th December 2024)
+- Add RefreshToken model
+- Add Activity, Project, Task, Notification, Chat models
+- Complete Login and Register
+- Add Project controller
+- Add tests for Project endpoints
+
 ---
