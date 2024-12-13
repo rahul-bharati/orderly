@@ -44,6 +44,6 @@ describe('Auth Middleware', () => {
 
     expect(res.status).toHaveBeenCalledWith(STATUS_CODE.UNAUTHORIZED);
     expect(mockNext).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({message: ERROR_MESSAGES.INVALID_TOKEN});
+    expect(res.send).toHaveBeenCalledWith({errors: [{"field": 'authorization', message: ERROR_MESSAGES.INVALID_TOKEN}]});
   })
 })

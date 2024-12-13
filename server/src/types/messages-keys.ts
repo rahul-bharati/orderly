@@ -1,1 +1,1 @@
-export type messagesKeys = 'REGISTER_SUCCESS'
+export type messagesKeys = 'REGISTER_SUCCESS' | 'PROJECT_DELETED_SUCCESSFULLY'

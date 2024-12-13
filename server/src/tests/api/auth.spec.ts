@@ -5,6 +5,12 @@ import {ERROR_MESSAGES} from "../../constants/error-message";
 import {appRequest} from "../test-setup";
 import {MESSAGES} from "../../constants/messages";
 import {describe} from "@jest/globals";
+import {
+  invalidLoginPayload,
+  invalidRegisterPayload,
+  validLoginPayload,
+  validRegisterPayload
+} from "../testVectors/payloads";
 
 const JWT_SECRET = process.env.ACCESS_TOKEN_SECRET || '';
 const JOSE_SECRET = new TextEncoder().encode(JWT_SECRET);
@@ -37,12 +43,7 @@ describe("POST /auth/register", () => {
   });
 
   it("should return 400 on invalid inputs", async () => {
-    const response = await appRequest.post("/auth/register").send({
-      firstName: "John",
-      email: "invalid-email",
-      password: "password",
-      confirmPassword: 'password1'
-    });
+    const response = await appRequest.post("/auth/register").send(invalidRegisterPayload);
     expect(response.status).toBe(STATUS_CODE.BAD_REQUEST);
 
     expect(response.body).toHaveProperty('errors');
@@ -66,14 +67,8 @@ describe("POST /auth/register", () => {
 
 
   it("should return 201 Created", async () => {
-    const payLoad = {
-      firstName: "John",
-      email: "testemail@test.com",
-      password: "Password123!",
-      confirmPassword: 'Password123!'
-    }
 
-    const response = await appRequest.post("/auth/register").send(payLoad);
+    const response = await appRequest.post("/auth/register").send(validRegisterPayload);
 
     expect(response.status).toBe(STATUS_CODE.CREATED);
     expect(response.body).toHaveProperty('message');
@@ -81,16 +76,10 @@ describe("POST /auth/register", () => {
   });
 
   it("should return 409 on duplicate email", async () => {
-    const payLoad = {
-      firstName: "John",
-      email: "testemail@test.com",
-      password: "Password123!",
-      confirmPassword: 'Password123!'
-    }
 
-    await appRequest.post("/auth/register").send(payLoad);
+    await appRequest.post("/auth/register").send(validRegisterPayload);
 
-    const response = await appRequest.post("/auth/register").send(payLoad);
+    const response = await appRequest.post("/auth/register").send(validRegisterPayload);
 
     expect(response.status).toBe(STATUS_CODE.CONFLICT);
     expect(response.body).toHaveProperty('errors');
@@ -126,21 +115,9 @@ describe("POST /auth/login", () => {
   });
 
   it("should return 401 on invalid credentials", async () => {
-    const registerPayload = {
-      firstName: "John",
-      email: "testemail@test.com",
-      password: "Password123!",
-      confirm_password: 'Password123!',
-    }
+    await appRequest.post("/auth/register").send(invalidRegisterPayload);
 
-    await appRequest.post("/auth/register").send(registerPayload);
-
-    const loginPayload = {
-      email: "testemail@test.com",
-      password: "obviously-wrong-password"
-    }
-
-    const response = await appRequest.post("/auth/login").send(loginPayload);
+    const response = await appRequest.post("/auth/login").send(invalidLoginPayload);
 
     expect(response.status).toBe(STATUS_CODE.UNAUTHORIZED);
     expect(response.body).toHaveProperty('errors');
@@ -155,21 +132,9 @@ describe("POST /auth/login", () => {
   });
 
   it("should return 200 OK", async () => {
-    const registerPayload = {
-      firstName: "John",
-      email: "testemail@test.com",
-      password: "Password123!",
-      confirmPassword: 'Password123!',
-    }
+    await appRequest.post("/auth/register").send(validRegisterPayload);
 
-    await appRequest.post("/auth/register").send(registerPayload);
-
-    const loginPayload = {
-      email: "testemail@test.com",
-      password: "Password123!"
-    }
-
-    const response = await appRequest.post("/auth/login").send(loginPayload);
+    const response = await appRequest.post("/auth/login").send(validLoginPayload);
     expect(response.status).toBe(STATUS_CODE.OK);
     expect(response.body).toHaveProperty('data');
     expect(response.body.data).toHaveProperty('accessToken');
@@ -202,21 +167,10 @@ describe("POST /auth/refresh-token", () => {
   });
 
   it("should return 200 OK", async () => {
-    const registerPayload = {
-      firstName: "John",
-      email: "testemail@test.com",
-      password: 'Password123!',
-      confirmPassword: 'Password123!'
-    };
 
-    await appRequest.post("/auth/register").send(registerPayload);
+    await appRequest.post("/auth/register").send(validRegisterPayload);
 
-    const loginPayload = {
-      email: "testemail@test.com",
-      password: 'Password123!'
-    }
-
-    const loginResponse = await appRequest.post("/auth/login").send(loginPayload);
+    const loginResponse = await appRequest.post("/auth/login").send(validLoginPayload);
     const {refreshToken} = loginResponse.body.data;
 
     const response = await appRequest.post("/auth/refresh-token").send({refreshToken});

@@ -11,7 +11,10 @@ export interface IProject {
 const ProjectSchema = new Schema<IProject>({
   name: {type: String, required: true},
   description: String,
-  collaborators: [{type: Schema.Types.ObjectId, ref: "User"}],
+  collaborators: [{
+    user: {type: Schema.Types.ObjectId, ref: "User"},
+    role: {type: String, enum: ["admin", "editor", "viewer"], default: "viewer"},
+  }],
   owner: {type: Schema.Types.ObjectId, ref: "User", required: true},
 }, {
   timestamps: true,
