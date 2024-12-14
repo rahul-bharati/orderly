@@ -2,7 +2,7 @@ import {Router} from "express";
 
 import AuthController from "../controllers/auth-controller";
 import {validateBody} from "../middlewares/schema-validation";
-import {UserLoginSchema, UserRegistrationSchema} from "../schemas/user-schema";
+import {UserLoginSchema, UserRegistrationSchema} from "../zod-schemas/user-schema";
 
 class AuthRouter {
   public router: Router;
