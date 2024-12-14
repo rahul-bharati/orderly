@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="11b9f7df-1eee-4278-9682-488e23f3969b" name="Changes" comment="rename schema to zod-schema for better understanding">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/orderly.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controllers/project-controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/project-controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/project-router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/project-router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/tests/test-helpers/get-access-token.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/tests/test-helpers/get-access-token.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/zod-schemas/project-schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/zod-schemas/project-schema.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rahul-bharati&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/rahul-bharati/orderly.git&quot;,
+    &quot;accountId&quot;: &quot;18fde1a0-39a1-4a11-8551-635d9e108b69&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2pt2LEe3yB1kflkRl4UO56Jd5jx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/files/projects/orderly/server/src/routes",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.test.executor": "Debug",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "ts.external.directory.path": "D:\\files\\projects\\orderly\\server\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\files\projects\orderly\server\src\routes" />
+      <recent name="D:\files\projects\orderly\server\src\models" />
+      <recent name="D:\files\projects\orderly\server\src\middlewares" />
+      <recent name="D:\files\projects\orderly\server\src\helpers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\files\projects\orderly\server\src\tests\test-helpers" />
+      <recent name="D:\files\projects\orderly\server\src\tests\unit" />
+      <recent name="D:\files\projects\orderly\server\src\tests\unit\middlewares" />
+      <recent name="D:\files\projects\orderly\server" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="11b9f7df-1eee-4278-9682-488e23f3969b" name="Changes" comment="" />
+      <created>1733570992456</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733570992456</updated>
+      <workItem from="1733570993552" duration="1554000" />
+      <workItem from="1733572590667" duration="9589000" />
+      <workItem from="1733599382333" duration="7303000" />
+      <workItem from="1733683048402" duration="911000" />
+      <workItem from="1733754363776" duration="30000" />
+      <workItem from="1733754423090" duration="15964000" />
+      <workItem from="1733857722228" duration="4939000" />
+      <workItem from="1733864001320" duration="596000" />
+      <workItem from="1733933868250" duration="8403000" />
+      <workItem from="1733945335945" duration="4738000" />
+      <workItem from="1734032728344" duration="3647000" />
+      <workItem from="1734117051155" duration="8414000" />
+      <workItem from="1734189783148" duration="1054000" />
+      <workItem from="1734193056758" duration="64000" />
+      <workItem from="1734199639428" duration="290000" />
+      <workItem from="1734199936267" duration="1670000" />
+    </task>
+    <task id="LOCAL-00001" summary="Setup Express + Typescript App">
+      <option name="closed" value="true" />
+      <created>1733573986476</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733573986476</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Server Setup&#10;- Mongodb setup&#10;- Test setup&#10;- Mock mongodb setup">
+      <option name="closed" value="true" />
+      <created>1733579290173</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733579290173</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update README.md">
+      <option name="closed" value="true" />
+      <created>1733582690845</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733582690845</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update README.md">
+      <option name="closed" value="true" />
+      <created>1733583650831</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733583650831</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Update Test Suite&#10;- Add initial app test&#10;- Add test cases for register and login route">
+      <option name="closed" value="true" />
+      <created>1733607019398</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733607019398</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Refactor initial code&#10;- Create App class&#10;- Add Initial Routers&#10;- Update test setup">
+      <option name="closed" value="true" />
+      <created>1733764361840</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733764361840</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add middlewares&#10;- Validation Schema&#10;- Express Catch All middleware for consistent error handling">
+      <option name="closed" value="true" />
+      <created>1733768797155</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733768797156</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Make registerRouter() method as private">
+      <option name="closed" value="true" />
+      <created>1733769003602</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733769003602</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update README.md">
+      <option name="closed" value="true" />
+      <created>1733769120584</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733769120584</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updating auth-controller and some tests cases">
+      <option name="closed" value="true" />
+      <created>1733771878459</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733771878459</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Authentication&#10;- Update AuthController.register() to pass all the test cases for 'POST /auth/register'">
+      <option name="closed" value="true" />
+      <created>1733863564079</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733863564079</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Update README.md">
+      <option name="closed" value="true" />
+      <created>1733863660892</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1733863660892</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add TODO">
+      <option name="closed" value="true" />
+      <created>1733864595943</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1733864595943</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Authentication module&#10;- Add AuthToken class responsible to generating tokens&#10;- Update Authcontroller.login method to log-in user on correct credential&#10;- Update AuthController.register to hash user password and store in DB">
+      <option name="closed" value="true" />
+      <created>1733942338169</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1733942338169</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Update README.md">
+      <option name="closed" value="true" />
+      <created>1733942453895</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1733942453895</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add method to verify tokens">
+      <option name="closed" value="true" />
+      <created>1733946920450</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1733946920450</updated>
+    </task>
+    <task id="LOCAL-00017" summary="implement Refresh Token&#10;- Add test cases for refresh token&#10;- Store refresh token in database&#10;- Endpoint to use refresh token to get fresh access token">
+      <option name="closed" value="true" />
+      <created>1733948257274</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1733948257274</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Add all required initial models">
+      <option name="closed" value="true" />
+      <created>1733950284879</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1733950284879</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Add auth middleware&#10;- Verify token&#10;- Thrown unauthorised error if token is not valid&#10;- Add tests">
+      <option name="closed" value="true" />
+      <created>1734117958583</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1734117958583</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Project Module&#10;- Add Test cases&#10;Setup helper to get access token and refactor">
+      <option name="closed" value="true" />
+      <created>1734125971386</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1734125971386</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Update README.md">
+      <option name="closed" value="true" />
+      <created>1734126153221</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1734126153221</updated>
+    </task>
+    <task id="LOCAL-00022" summary="rename schema to zod-schema for better understanding">
+      <option name="closed" value="true" />
+      <created>1734193106257</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1734193106257</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Setup Express + Typescript App" />
+    <MESSAGE value="Server Setup&#10;- Mongodb setup&#10;- Test setup&#10;- Mock mongodb setup" />
+    <MESSAGE value="Update Test Suite&#10;- Add initial app test&#10;- Add test cases for register and login route" />
+    <MESSAGE value="Refactor initial code&#10;- Create App class&#10;- Add Initial Routers&#10;- Update test setup" />
+    <MESSAGE value="Add middlewares&#10;- Validation Schema&#10;- Express Catch All middleware for consistent error handling" />
+    <MESSAGE value="Make registerRouter() method as private" />
+    <MESSAGE value="update README.md" />
+    <MESSAGE value="Updating auth-controller and some tests cases" />
+    <MESSAGE value="Authentication&#10;- Update AuthController.register() to pass all the test cases for 'POST /auth/register'" />
+    <MESSAGE value="Add TODO" />
+    <MESSAGE value="Authentication module&#10;- Add AuthToken class responsible to generating tokens&#10;- Update Authcontroller.login method to log-in user on correct credential&#10;- Update AuthController.register to hash user password and store in DB" />
+    <MESSAGE value="Add method to verify tokens" />
+    <MESSAGE value="implement Refresh Token&#10;- Add test cases for refresh token&#10;- Store refresh token in database&#10;- Endpoint to use refresh token to get fresh access token" />
+    <MESSAGE value="Add all required initial models" />
+    <MESSAGE value="Add auth middleware&#10;- Verify token&#10;- Thrown unauthorised error if token is not valid&#10;- Add tests" />
+    <MESSAGE value="Project Module&#10;- Add Test cases&#10;Setup helper to get access token and refactor" />
+    <MESSAGE value="Update README.md" />
+    <MESSAGE value="rename schema to zod-schema for better understanding" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename schema to zod-schema for better understanding" />
+  </component>
+</project>

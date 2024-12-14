@@ -22,4 +22,5 @@ export type errorMessageKeys =
   | 'REFRESH_TOKEN_INVALID'
   | 'FORBIDDEN'
   | 'PROJECT_NAME_REQUIRED'
-  | 'PROJECT_NOT_FOUND';
+  | 'PROJECT_NOT_FOUND'
+  | 'INVALID_PROJECT_ID';

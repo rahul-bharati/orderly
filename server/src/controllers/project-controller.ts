@@ -1,50 +1,73 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 
 import Project from "../models/project";
+import { STATUS_CODE } from "../constants/status_codes";
+import mongoose from "mongoose";
+import { ERROR_MESSAGES } from "../constants/error-message";
+import { MESSAGES } from "../constants/messages";
 
 class ProjectController {
   async createProject(req: Request, res: Response) {
-    const {name, description} = req.body;
-    const project = new Project({name, description, owner: req.user._id});
-    await project.save();
-    res.status(201).send(project);
+    const { name, description = '' } = req.body;
+    const project = new Project({ name, description, owner: req.userId, collaborators: [{ user: req.userId, role: "admin" }] });
+    const savedProject = await project.save();
+    res.status(STATUS_CODE.CREATED).send({ data: { project: savedProject } });
   }
 
   async getProjects(req: Request, res: Response) {
-    const projects = await Project.find({owner: req.user._id});
-    res.send(projects);
+    const projects = await Project.find({ owner: req.userId });
+    res.status(STATUS_CODE.OK).send({ data: { projects } });
   }
 
   async getProject(req: Request, res: Response) {
-    const project = await Project.findOne({_id: req.params.id, owner: req.user._id});
-    if (!project) {
-      res.status(404).send({message: "Project not found"});
+    const projectId = req.params.id || '';
+
+    if (!(mongoose.Types.ObjectId.isValid(projectId))) {
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
       return;
     }
-    res.send(project);
+
+    const project = await Project.findOne({ _id: req.params.id, $or: [{ owner: req.userId }, { "collaborators.user": req.userId }] });
+    if (!project) {
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
+      return;
+    }
+
+    res.status(STATUS_CODE.OK).send({ data: { project } });
   }
 
   async updateProject(req: Request, res: Response) {
-    const {name, description} = req.body;
-    const project = await Project.findOne({_id: req.params.id, owner: req.user._id});
-    if (!project) {
-      res.status(404).send({message: "Project not found"});
+    if (!(mongoose.Types.ObjectId.isValid(req.params.id))) {
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
       return;
     }
+
+    const { name, description } = req.body;
+    const project = await Project.findOne({ _id: req.params.id, $or: [{ owner: req.userId }, { "collaborators.user": req.userId }] });
+    if (!project) {
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
+      return;
+    }
+
     project.name = name;
     project.description = description;
-    await project.save();
-    res.send(project);
+    const updatedProject = await project.save();
+    res.send({ data: { project: updatedProject } });
   }
 
   async deleteProject(req: Request, res: Response) {
-    const project = await Project.findOne({_id: req.params.id, owner: req.user._id});
+    if (!(mongoose.Types.ObjectId.isValid(req.params.id))) {
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
+      return;
+    }
+
+    const project = await Project.findOne({ _id: req.params.id, owner: req.userId });
     if (!project) {
-      res.status(404).send({message: "Project not found"});
+      res.status(STATUS_CODE.NOT_FOUND).send({ errors: [{ field: 'id', message: ERROR_MESSAGES.PROJECT_NOT_FOUND }] });
       return;
     }
     await project.deleteOne();
-    res.send({message: "Project deleted"});
+    res.send({ message: MESSAGES.PROJECT_DELETED_SUCCESSFULLY });
   }
 }
 

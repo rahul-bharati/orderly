@@ -1,4 +1,4 @@
-import {errorMessageKeys} from "../types/error-message-keys";
+import { errorMessageKeys } from "../types/error-message-keys";
 
 export const ERROR_MESSAGES: Record<errorMessageKeys, string> = {
   INVALID_CREDENTIALS: 'Invalid credentials',
@@ -24,5 +24,6 @@ export const ERROR_MESSAGES: Record<errorMessageKeys, string> = {
   REFRESH_TOKEN_INVALID: "Refresh token is invalid",
   FORBIDDEN: "You don't have permission to perform this action",
   PROJECT_NAME_REQUIRED: "Project name is required",
-  PROJECT_NOT_FOUND: "Project not found"
+  PROJECT_NOT_FOUND: "Project not found",
+  INVALID_PROJECT_ID: "Invalid project id"
 }

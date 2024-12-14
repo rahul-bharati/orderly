@@ -1,8 +1,8 @@
-import {Request, Response} from "express";
-import {authMiddleware} from "../../../middlewares/auth-middleware";
-import {beforeEach, describe, expect} from "@jest/globals";
-import {STATUS_CODE} from "../../../constants/status_codes";
-import {ERROR_MESSAGES} from "../../../constants/error-message";
+import { Request, Response } from "express";
+import { authMiddleware } from "../../../middlewares/auth-middleware";
+import { beforeEach, describe, expect } from "@jest/globals";
+import { STATUS_CODE } from "../../../constants/status_codes";
+import { ERROR_MESSAGES } from "../../../constants/error-message";
 import authToken from "../../../helpers/auth-token";
 
 jest.mock('jose', () => ({
@@ -10,7 +10,7 @@ jest.mock('jose', () => ({
 }));
 
 describe('Auth Middleware', () => {
-  const mockRequest = (headers: Record<string, string>) => ({headers}) as Partial<Request> as Request;
+  const mockRequest = (headers: Record<string, string>) => ({ headers }) as Partial<Request> as Request;
   const mockResponse = () => {
     const res = {} as Partial<Response>;
     res.status = jest.fn().mockReturnThis();
@@ -25,10 +25,10 @@ describe('Auth Middleware', () => {
   });
 
   it("should call next on valid token", async () => {
-    const req = mockRequest({authorization: "Bearer valid_token"});
+    const req = mockRequest({ authorization: "Bearer valid_token" });
     const res = mockResponse();
 
-    jest.spyOn(authToken, 'verifyAccessToken').mockResolvedValue({id: 1});
+    jest.spyOn(authToken, 'verifyAccessToken').mockResolvedValue({ payload: { userId: 'user_id' } });
 
     await authMiddleware(req, res, mockNext);
 
@@ -44,6 +44,6 @@ describe('Auth Middleware', () => {
 
     expect(res.status).toHaveBeenCalledWith(STATUS_CODE.UNAUTHORIZED);
     expect(mockNext).not.toHaveBeenCalled();
-    expect(res.send).toHaveBeenCalledWith({errors: [{"field": 'authorization', message: ERROR_MESSAGES.INVALID_TOKEN}]});
+    expect(res.send).toHaveBeenCalledWith({ errors: [{ "field": 'authorization', message: ERROR_MESSAGES.INVALID_TOKEN }] });
   })
 })

@@ -1,6 +1,6 @@
-import {NextFunction, Request, Response} from 'express';
-import {STATUS_CODE} from "../constants/status_codes";
-import {ERROR_MESSAGES} from "../constants/error-message";
+import { NextFunction, Request, Response } from 'express';
+import { STATUS_CODE } from "../constants/status_codes";
+import { ERROR_MESSAGES } from "../constants/error-message";
 import authToken from '../helpers/auth-token';
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +18,9 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
   const token = authHeader.split(' ')[1];
   try {
-    req.user = await authToken.verifyAccessToken(token);
+    const { payload } = await authToken.verifyAccessToken(token);
+    req.userId = payload.userId;
+
     next();
   } catch (error: any) {
     res.status(STATUS_CODE.UNAUTHORIZED).send({
